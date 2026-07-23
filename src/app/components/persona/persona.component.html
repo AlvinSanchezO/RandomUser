@@ -1,0 +1,110 @@
+<div class="card-container">
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Buscando perfil...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <p>{{ error() }}</p>
+      <button class="primary-btn" (click)="loadNewUser()">
+        <svg class="btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Reintentar
+      </button>
+    </div>
+  } @else if (user(); as u) {
+    <div class="profile-card">
+      
+      <div class="card-sidebar">
+        <!-- Fotografía -->
+        <div class="profile-header">
+          <div class="profile-picture-container">
+            <img [src]="u.picture.large" [alt]="u.name.first + ' ' + u.name.last" class="profile-picture" />
+          </div>
+        </div>
+        
+        <!-- Nombre y fecha de nacimiento / edad -->
+        <div class="profile-info">
+          <h2 class="profile-name">{{ u.name.title }} {{ u.name.first }} {{ u.name.last }}</h2>
+          <p class="profile-dob">Nacido el {{ u.dob.date | date:'longDate' }}<br>({{ u.dob.age }} años)</p>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <!-- Dirección -->
+        <div class="profile-section">
+          <h3>
+            <svg class="info-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Dirección
+          </h3>
+          
+          <div class="info-grid">
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">Calle</span>
+                <span class="info-value">{{ u.location.street.name }} {{ u.location.street.number }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">Ciudad / Estado</span>
+                <span class="info-value">{{ u.location.city }}, {{ u.location.state }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">País</span>
+                <span class="info-value">{{ u.location.country }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Datos de contacto -->
+        <div class="profile-section">
+          <h3>
+            <svg class="info-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Contacto
+          </h3>
+          <div class="info-grid">
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ u.email }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">Teléfono</span>
+                <span class="info-value">{{ u.phone }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-content">
+                <span class="info-label">Celular</span>
+                <span class="info-value">{{ u.cell }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="primary-btn" (click)="loadNewUser()">
+            <svg class="btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Generar Otro Usuario
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  }
+</div>

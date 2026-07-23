@@ -1,59 +1,60 @@
-# AngularRandomuser
+# Angular RandomUser Profiler
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.18.
+Una aplicación web desarrollada con **Angular 21** para consumir la API pública [RandomUser.me](https://randomuser.me/) y mostrar información de usuarios generados aleatoriamente en una interfaz de tarjeta (Card UI) moderna, responsiva y altamente profesional.
 
-## Development server
+## Características Principales
 
-To start a local development server, run:
+- **Angular Signals:** Gestión de estado reactivo (usuario, estado de carga y manejo de errores) utilizando `signal()`.
+- **Nuevo Control Flow:** Uso intensivo de la sintaxis `@if` y `@else if` para renderizar la interfaz de forma declarativa.
+- **Standalone Components:** Arquitectura modular sin `NgModules`, importando dependencias como `DatePipe` de forma aislada.
+- **UI Responsiva & Profesional:** Diseño adaptable con CSS puro utilizando Flexbox y CSS Grid. En dispositivos móviles se visualiza como una tarjeta vertical, mientras que en pantallas más amplias adopta una estructura a dos columnas (Sidebar y Contenido).
+- **Control de Excepciones:** Manejo de errores de red (offline state) notificados a la interfaz sin romper la ejecución.
 
-```bash
-ng serve
+## Diagrama de Flujo de la Aplicación
+
+El siguiente diagrama detalla cómo se maneja el ciclo de vida de los datos, desde la inicialización (o clic del usuario) hasta el renderizado de la UI:
+
+```mermaid
+graph TD
+    A([Inicio / Clic en 'Generar Otro Usuario']) --> B[PersonaComponent]
+    B -->|Llama a loadNewUser| C(Activa loading=true)
+    C --> D[RandomuserService]
+    
+    D -->|HTTP GET| E((API RandomUser))
+    
+    E -- Éxito --> F[RxJS: map]
+    F -->|Extrae resultados| G[Signal: user.set]
+    G --> H(Desactiva loading=false)
+    H --> I{Control Flow @if}
+    I -->|Render| J[Se muestra la Tarjeta de Perfil]
+    
+    E -. Error de Red .-> K[Atrapa Excepción]
+    K --> L[Signal: error.set]
+    L --> M(Desactiva loading=false)
+    M --> N{Control Flow @else if}
+    N -->|Render| O[Se muestra la Pantalla de Error]
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Estructura del Proyecto
 
-## Code scaffolding
+* `src/app/models/user.model.ts`: Interfaces de TypeScript para tipar la respuesta de la API.
+* `src/app/services/randomuser.service.ts`: Servicio inyectable que realiza peticiones HTTP.
+* `src/app/components/persona/`: Componente standalone principal, el cual gestiona la vista de la tarjeta de perfil y su responsividad (CSS, HTML y TS).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Requisitos y Configuración Local
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+1. Asegúrate de tener instalado [Node.js](https://nodejs.org/) (se recomienda la versión LTS) y Angular CLI globalmente.
+2. Clona el repositorio e instala las dependencias:
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+3. Levanta el servidor de desarrollo local:
 
 ```bash
-ng test
+npm run start
 ```
+*(Opcionalmente puedes usar `ng serve`)*.
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+4. Abre tu navegador web en `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas algún archivo fuente.
