@@ -43,18 +43,27 @@ graph TD
 
 ## Requisitos y Configuración Local
 
-1. Asegúrate de tener instalado [Node.js](https://nodejs.org/) (se recomienda la versión LTS) y Angular CLI globalmente.
-2. Clona el repositorio e instala las dependencias:
+1. Asegúrate de tener instalado [Node.js](https://nodejs.org/) (se recomienda la versión LTS o superior) y **Angular CLI v21** globalmente.
+   Puedes instalar Angular CLI v21 ejecutando:
+   ```bash
+   npm install -g @angular/cli@21
+   ```
 
-```bash
-npm install
-```
+2. Clona este repositorio en tu máquina local:
+   ```bash
+   git clone https://github.com/AlvinSanchezO/RandomUser.git
+   cd RandomUser
+   ```
 
-3. Levanta el servidor de desarrollo local:
+3. Instala las dependencias del proyecto:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run start
-```
-*(Opcionalmente puedes usar `ng serve`)*.
+4. Levanta el servidor de desarrollo local de Angular 21:
+   ```bash
+   ng serve
+   ```
+   *(También puedes utilizar `npm run start`)*.
 
-4. Abre tu navegador web en `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas algún archivo fuente.
+5. Abre tu navegador web en `http://localhost:4200/`. La aplicación es interactiva y se recargará automáticamente si modificas algún archivo fuente.
